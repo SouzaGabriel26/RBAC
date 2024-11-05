@@ -3,3 +3,6 @@ services:
     image: 'postgres'
     container_name: 'rbac-postgres'
     restart: 'always'
+    env_file:
+      - path: ../.env
+        required: true

@@ -5,12 +5,13 @@
 	"author": "SouzaGabriel26",
 	"license": "MIT",
 	"scripts": {
-		"dev": "pnpm compose:up && pnpm tsx watch src/index.ts",
+		"dev": "pnpm compose:up && pnpm services:wait && pnpm tsx watch src/index.ts",
 		"biome:write": "biome check --write .",
 		"biome:check": "biome check .",
 		"compose:up": "pnpm docker:compose up -d",
 		"compose:down": "pnpm docker:compose down",
-		"docker:compose": "docker compose -f infra/docker-compose.yml"
+		"docker:compose": "docker compose -f infra/docker-compose.yml",
+		"services:wait": "node --import tsx infra/scripts/wait-for-services.ts"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
