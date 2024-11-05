@@ -1,0 +1,26 @@
+{
+	"name": "role-based-access-control",
+	"version": "1.0.0",
+	"main": "src/index.ts",
+	"author": "SouzaGabriel26",
+	"license": "MIT",
+	"scripts": {
+		"dev": "pnpm compose:up && pnpm tsx watch src/index.ts",
+		"biome:write": "biome check --write .",
+		"biome:check": "biome check .",
+		"compose:up": "pnpm docker:compose up -d",
+		"compose:down": "pnpm docker:compose down",
+		"docker:compose": "docker compose -f infra/docker-compose.yml"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@types/express": "5.0.0",
+		"@types/node": "22.8.7",
+		"prisma": "5.21.1",
+		"tsx": "4.19.2",
+		"typescript": "5.6.3"
+	},
+	"dependencies": {
+		"express": "4.21.1"
+	}
+}

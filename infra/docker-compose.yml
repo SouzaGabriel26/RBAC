@@ -1,0 +1,5 @@
+services:
+  rbac-postgres:
+    image: 'postgres'
+    container_name: 'rbac-postgres'
+    restart: 'always'
