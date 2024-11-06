@@ -5,15 +5,17 @@
 	"author": "SouzaGabriel26",
 	"license": "MIT",
 	"scripts": {
-		"dev": "pnpm compose:up && pnpm tsx watch src/index.ts",
+		"dev": "pnpm compose:up && pnpm services:wait && pnpm tsx watch src/index.ts",
 		"biome:write": "biome check --write .",
 		"biome:check": "biome check .",
 		"compose:up": "pnpm docker:compose up -d",
 		"compose:down": "pnpm docker:compose down",
-		"docker:compose": "docker compose -f infra/docker-compose.yml"
+		"docker:compose": "docker compose -f infra/docker-compose.yml --env-file .env",
+		"services:wait": "node --import tsx infra/scripts/wait-for-services.ts"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
+		"@types/bcryptjs": "2.4.6",
 		"@types/express": "5.0.0",
 		"@types/node": "22.8.7",
 		"prisma": "5.21.1",
@@ -21,6 +23,10 @@
 		"typescript": "5.6.3"
 	},
 	"dependencies": {
-		"express": "4.21.1"
+		"@prisma/client": "5.21.1",
+		"bcryptjs": "2.4.3",
+		"dotenv": "16.4.5",
+		"express": "4.21.1",
+		"zod": "3.23.8"
 	}
 }
