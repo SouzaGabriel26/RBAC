@@ -4,6 +4,7 @@
     "target": "es2016",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "moduleResolution": "Node"
   }
 }
