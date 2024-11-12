@@ -1,4 +1,5 @@
 import { AccountAlreadyExists } from '../error/AccountAlreadyExists';
+import { RoleDoesNotExists } from '../error/RoleDoesNotExists';
 import { prismaClient } from '../libs/prismaClient';
 
 import { hash } from 'bcryptjs';
@@ -24,7 +25,15 @@ export class SignUpUseCase {
 			throw new AccountAlreadyExists();
 		}
 
-		// TODO: validate if roleId exists
+		const roleIdExists = await prismaClient.role.findUnique({
+			where: {
+				id: roleId,
+			},
+		});
+
+		if (!roleIdExists) {
+			throw new RoleDoesNotExists();
+		}
 
 		const hashedPassword = await hash(password, this.salt);
 
