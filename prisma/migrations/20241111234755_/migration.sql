@@ -35,6 +35,8 @@ CREATE TABLE "permissions" (
 CREATE TABLE "role_permissions" (
     "role_id" UUID NOT NULL,
     "permission_id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "role_permissions_pkey" PRIMARY KEY ("role_id","permission_id")
 );

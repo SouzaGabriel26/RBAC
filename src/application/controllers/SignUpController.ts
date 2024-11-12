@@ -1,4 +1,5 @@
 import { AccountAlreadyExists } from '../error/AccountAlreadyExists';
+import { RoleDoesNotExists } from '../error/RoleDoesNotExists';
 import type { IController, IResponse } from '../interfaces/IController';
 import type { IRequest } from '../interfaces/IRequest';
 import type { SignUpUseCase } from '../useCases/SignUpUseCase';
@@ -25,8 +26,6 @@ export class SignUpController implements IController {
 
 			await this.signUpUseCase.execute({ email, name, password, roleId });
 
-			// TODO: Log to an external service
-
 			return {
 				statusCode: 204,
 				body: null,
@@ -46,6 +45,15 @@ export class SignUpController implements IController {
 					statusCode: 409,
 					body: {
 						error: 'This email is already in use.',
+					},
+				};
+			}
+
+			if (error instanceof RoleDoesNotExists) {
+				return {
+					statusCode: 404,
+					body: {
+						error: 'Role not found.',
 					},
 				};
 			}
