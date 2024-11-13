@@ -1,35 +1,38 @@
 {
-	"name": "role-based-access-control",
-	"version": "1.0.0",
-	"main": "src/index.ts",
-	"author": "SouzaGabriel26",
-	"license": "MIT",
-	"scripts": {
-		"dev": "pnpm compose:up && pnpm services:wait && pnpx prisma migrate dev && pnpm tsx watch src/index.ts",
-		"biome:write": "biome check --write .",
-		"biome:check": "biome check .",
-		"compose:up": "pnpm docker:compose up -d",
-		"compose:down": "pnpm docker:compose down",
-		"docker:compose": "docker compose -f infra/docker-compose.yml --env-file .env",
-		"services:wait": "node --import tsx infra/scripts/wait-for-services.ts",
-		"test": "pnpm vitest --watch=false",
-		"test:watch": "pnpm vitest"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
-		"@types/bcryptjs": "2.4.6",
-		"@types/express": "5.0.0",
-		"@types/node": "22.8.7",
-		"prisma": "5.21.1",
-		"tsx": "4.19.2",
-		"typescript": "5.6.3",
-		"vitest": "2.1.4"
-	},
-	"dependencies": {
-		"@prisma/client": "5.21.1",
-		"bcryptjs": "2.4.3",
-		"dotenv": "16.4.5",
-		"express": "4.21.1",
-		"zod": "3.23.8"
-	}
+  "name": "role-based-access-control",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "author": "SouzaGabriel26",
+  "license": "MIT",
+  "scripts": {
+    "dev": "pnpm compose:up && pnpm services:wait && pnpx prisma migrate dev && pnpm seed && pnpm tsx watch src/index.ts",
+    "biome:write": "biome check --write .",
+    "biome:check": "biome check .",
+    "compose:up": "pnpm docker:compose up -d",
+    "compose:down": "pnpm docker:compose down",
+    "docker:compose": "docker compose -f infra/docker-compose.yml --env-file .env",
+    "services:wait": "node --import tsx infra/scripts/wait-for-services.ts",
+    "test": "pnpm vitest --watch=false",
+    "seed": "pnpm --import tsx prisma/seed.ts",
+    "test:watch": "pnpm vitest"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/bcryptjs": "2.4.6",
+    "@types/express": "5.0.0",
+    "@types/jsonwebtoken": "9.0.7",
+    "@types/node": "22.8.7",
+    "prisma": "5.21.1",
+    "tsx": "4.19.2",
+    "typescript": "5.6.3",
+    "vitest": "2.1.4"
+  },
+  "dependencies": {
+    "@prisma/client": "5.21.1",
+    "bcryptjs": "2.4.3",
+    "dotenv": "16.4.5",
+    "express": "4.21.1",
+    "jsonwebtoken": "9.0.2",
+    "zod": "3.23.8"
+  }
 }

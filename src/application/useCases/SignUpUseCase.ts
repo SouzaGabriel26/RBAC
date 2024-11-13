@@ -1,49 +1,50 @@
-import { AccountAlreadyExists } from '../error/AccountAlreadyExists';
-import { RoleDoesNotExists } from '../error/RoleDoesNotExists';
-import { prismaClient } from '../libs/prismaClient';
+import { AccountAlreadyExists } from "../error/AccountAlreadyExists";
+import { RoleDoesNotExists } from "../error/RoleDoesNotExists";
+import type { IUseCase } from "../interfaces/IUseCase";
+import { prismaClient } from "../libs/prismaClient";
 
-import { hash } from 'bcryptjs';
+import { hash } from "bcryptjs";
 
 interface IInput {
-	name: string;
-	email: string;
-	password: string;
-	roleId: string;
+  name: string;
+  email: string;
+  password: string;
+  roleId: string;
 }
 
-export class SignUpUseCase {
-	constructor(private readonly salt: number) {}
+export class SignUpUseCase implements IUseCase {
+  constructor(private readonly salt: number) {}
 
-	async execute({ email, name, password, roleId }: IInput) {
-		const accountAlreadyExists = await prismaClient.user.findUnique({
-			where: {
-				email,
-			},
-		});
+  async execute({ email, name, password, roleId }: IInput) {
+    const accountAlreadyExists = await prismaClient.user.findUnique({
+      where: {
+        email,
+      },
+    });
 
-		if (accountAlreadyExists) {
-			throw new AccountAlreadyExists();
-		}
+    if (accountAlreadyExists) {
+      throw new AccountAlreadyExists();
+    }
 
-		const roleIdExists = await prismaClient.role.findUnique({
-			where: {
-				id: roleId,
-			},
-		});
+    const roleIdExists = await prismaClient.role.findUnique({
+      where: {
+        id: roleId,
+      },
+    });
 
-		if (!roleIdExists) {
-			throw new RoleDoesNotExists();
-		}
+    if (!roleIdExists) {
+      throw new RoleDoesNotExists();
+    }
 
-		const hashedPassword = await hash(password, this.salt);
+    const hashedPassword = await hash(password, this.salt);
 
-		await prismaClient.user.create({
-			data: {
-				email,
-				name,
-				passwordHash: hashedPassword,
-				roleId,
-			},
-		});
-	}
+    await prismaClient.user.create({
+      data: {
+        email,
+        name,
+        passwordHash: hashedPassword,
+        roleId,
+      },
+    });
+  }
 }
