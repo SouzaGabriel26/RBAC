@@ -28,7 +28,10 @@ export class SignInUseCase implements IUseCase {
       throw new InvalidCredentials();
     }
 
-    const accessToken = sign({ id: user.id }, process.env.JWT_SECRET_KEY!);
+    const accessToken = sign(
+      { sub: user.id, role: user.roleId },
+      process.env.JWT_SECRET_KEY
+    );
 
     return {
       accessToken,
