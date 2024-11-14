@@ -48,7 +48,7 @@ async function main() {
       email: "admin@email.com",
       name: "Admin User",
       passwordHash:
-        "$2a$12$cf1tYwdsYYkO6wUeDPOElegUY/6X2Iw/55XgR6B/NxBbnDcVyTzB.",
+        "$2a$12$cf1tYwdsYYkO6wUeDPOElegUY/6X2Iw/55XgR6B/NxBbnDcVyTzB.", // 123456
       roleId: adminRole.id,
     },
   });
