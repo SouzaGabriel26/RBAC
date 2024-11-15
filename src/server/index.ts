@@ -1,6 +1,8 @@
 import express from "express";
 import { makeAuthenticationMiddleware } from "../factories/makeAuthenticationMiddleware";
+import { makeAuthorizationMiddleware } from "../factories/makeAuthorizationMiddleware";
 import { makeListLeadsController } from "../factories/makeListLeadsController";
+import { makeListRolePermissionsController } from "../factories/makeListRolePermissionsContoller";
 import { makeSignInController } from "../factories/makeSignInController";
 import { makeSignUpController } from "../factories/makeSignUpController";
 import { middlewareAdapter } from "./adapters/middlewareAdapter";
@@ -16,6 +18,13 @@ app.get(
   mountUrl("/leads"),
   middlewareAdapter(makeAuthenticationMiddleware()),
   routeAdapter(makeListLeadsController())
+);
+
+app.get(
+  mountUrl("/role-permissions"),
+  middlewareAdapter(makeAuthenticationMiddleware()),
+  middlewareAdapter(makeAuthorizationMiddleware(["permission:read"])),
+  routeAdapter(makeListRolePermissionsController())
 );
 
 app.listen(3000, () => {
