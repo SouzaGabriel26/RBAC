@@ -30,7 +30,10 @@ export class SignInUseCase implements IUseCase {
 
     const accessToken = sign(
       { sub: user.id, role: user.roleId },
-      process.env.JWT_SECRET_KEY
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: "1d",
+      }
     );
 
     return {

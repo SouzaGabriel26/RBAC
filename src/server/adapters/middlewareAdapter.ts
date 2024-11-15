@@ -12,7 +12,8 @@ export function middlewareAdapter(middleware: IMiddleware) {
 
     if ("statusCode" in middlewareResult) {
       const { body, statusCode } = middlewareResult;
-      return response.json(body).status(statusCode);
+      response.json(body).status(statusCode);
+      return;
     }
 
     request.metadata = {

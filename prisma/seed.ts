@@ -12,7 +12,7 @@ async function main() {
     },
   });
 
-  await prismaClient.role.create({
+  const userRole = await prismaClient.role.create({
     data: {
       name: "user",
     },
@@ -43,14 +43,24 @@ async function main() {
     ],
   });
 
-  await prismaClient.user.create({
-    data: {
-      email: "admin@email.com",
-      name: "Admin User",
-      passwordHash:
-        "$2a$12$cf1tYwdsYYkO6wUeDPOElegUY/6X2Iw/55XgR6B/NxBbnDcVyTzB.", // 123456
-      roleId: adminRole.id,
-    },
+  const defaultPassword =
+    "$2a$12$cf1tYwdsYYkO6wUeDPOElegUY/6X2Iw/55XgR6B/NxBbnDcVyTzB."; // 123456
+
+  await prismaClient.user.createMany({
+    data: [
+      {
+        email: "admin@email.com",
+        name: "Admin User",
+        passwordHash: defaultPassword,
+        roleId: adminRole.id,
+      },
+      {
+        email: "user@email.com",
+        name: "Normal User",
+        passwordHash: defaultPassword,
+        roleId: userRole.id,
+      },
+    ],
   });
 
   console.log("Seeds created successfully!");
